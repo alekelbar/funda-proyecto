@@ -42,6 +42,7 @@ int main()
 
 		string socio = "";
 		string desayuno = "";
+		string habitacion = "";
 
 		switch (opcion) {
 		case 1:
@@ -62,6 +63,21 @@ int main()
 
 			cout << "\nTipo de habitacion (individual: 1, doble: 2, cuadruple: 3) ";
 			cin >> tipo_habitacion;
+
+			switch (tipo_habitacion)
+			{
+			case 1:
+				habitacion = "Individual";
+				break;
+			case 2:
+				habitacion = "doble";
+				break;
+			case 3:
+				habitacion = "cuadruple";
+				break;
+			default:
+				break;
+			}
 
 			switch (tipo_habitacion)
 			{
@@ -102,7 +118,7 @@ int main()
 
 			// Imprimir la tabla
 			cout << setw(20) << left << "Concepto" << setw(30) << left << "Valor" << endl;
-			cout << setw(30) << left << "Tipo de Habitación" << setw(30) << left << tipo_habitacion << endl;
+			cout << setw(30) << left << "Tipo de Habitación" << setw(30) << left << habitacion << endl;
 			cout << setw(30) << left << "Días" << setw(30) << left << dias << endl;
 			cout << setw(30) << left << "Desayuno" << setw(30) << left << (llevaDesayuno ? "Sí" : "No") << endl;
 			cout << setw(30) << left << "Socio" << setw(30) << left << (esSocio ? "Sí" : "No") << endl;
