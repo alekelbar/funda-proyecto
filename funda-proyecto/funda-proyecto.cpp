@@ -8,114 +8,83 @@ using namespace std;
 // #4 : Administración hotel
 int main()
 {
-	std::locale::global(std::locale("")); // tildes, signos de pregunta, etc...
+    std::locale::global(std::locale("")); // tildes, signos de pregunta, etc...
+    char opcion;
+    double subtotal = 0.0;
+    const double iva = 0.13;
 
-	// Declaración de variables
-	int opcion = 0;
-	int tipo_habitacion{ 1 }; // 1; individual, 2; doble, 3; triple
-	int dias = { 0 };
-	double costoHabitacion = { 0 };
-	double descuento = { 0 };
-	bool esSocio{ false }; // Es o no socio...
-	bool llevaDesayuno{ false }; // incluye o no, desayuno
+    std::cout << "Bienvenido a la pizzeria!" << std::endl;
 
-	// Bucle principal para un menú
-	while (opcion != 4) {
+    do {
+        std::cout << "Menú de Pizzas:" << std::endl;
+        std::cout << "a) Suprema\n\r b) Jamón y queso\n\r c) Vegetariana\n\r d) Especial" << std::endl;
+        std::cout << "Seleccione el tipo de pizza (a/b/c/d): ";
+        std::cin >> opcion;
 
-		// Para la siguiente cotización reinicio...
-		tipo_habitacion =  1; // 1; individual, 2; doble, 3; triple
-		dias = 0;
-		costoHabitacion = 0;
-		descuento = 0;
-		esSocio = false; // Es o no socio...
-		llevaDesayuno = false; // incluye o no, desayuno
+        int cantidad = 0;
+        double precio = 0;
+        std::string tamano = "";
 
-		// Menú de opciones
-		cout << "-------------HOTEL 5 estrellas-------------" << endl;
-		cout << "Menu de opciones:" << endl;
-		cout << "1. Cotizar habitacion" << endl;
-		cout << "4. Salir" << endl;
-		cout << "Elija una opcion: ";
-		cin >> opcion;
+        switch (opcion) {
+        case 'a':
+            precio = 3000;
+            break;
+        case 'b':
+            precio = 3000;
+            break;
+        case 'c':
+            precio = 3000;
+            break;
+        case 'd':
+            precio = 3000;
+            break;
+        default:
+            std::cout << "Opción no válida. Intente nuevamente." << std::endl;
+            continue;
+        }
 
-		system("cls");
+        std::cout << "Seleccione el tamaño (1.Personal 2.Mediana 3.Grande 4.Extra grande): ";
+        int opcionTamanio;
+        std::cin >> opcionTamanio;
 
-		string socio = "";
-		string desayuno = "";
+        switch (opcionTamanio) {
+        case 1:
+            tamano = "Personal";
+            break;
+        case 2:
+            tamano = "Mediana";
+            precio += 3500; // Aumentar el precio por ser mediana
+            break;
+        case 3:
+            tamano = "Grande";
+            precio += 5000; // Aumentar el precio por ser grande
+            break;
+        case 4:
+            tamano = "Extra grande";
+            precio += 9000; // Aumentar el precio por ser extra grande
+            break;
+        default:
+            std::cout << "Tamaño no válido. Intente nuevamente." << std::endl;
+            continue;
+        }
 
-		switch (opcion) {
-		case 1:
-			// ¿Se trata de un socio?
-			cout << "\n¿Es usted socio (S/N)? ";
-			cin >> socio;
+        std::cout << "Ingrese la cantidad de pizzas de este tipo: ";
+        std::cin >> cantidad;
 
-			if (socio == "S") {
-				esSocio = true;
-			}
+        subtotal += precio * cantidad;
 
-			cout << "\n¿Incluye desayuno (S/N)? ";
-			cin >> desayuno;
+        std::cout << "¿Desea pedir otro tipo de pizza? (S/N): ";
+        std::cin >> opcion;
+    } while (opcion == 'S' || opcion == 's');
 
-			if (desayuno == "S") {
-				llevaDesayuno = true;
-			}
+    double total = subtotal + (subtotal * iva);
 
-			cout << "\nTipo de habitacion (individual: 1, doble: 2, cuadruple: 3) ";
-			cin >> tipo_habitacion;
+    std::cout << "-------- Factura --------" << std::endl;
+    std::cout << "Subtotal: $" << std::fixed << std::setprecision(2) << subtotal << std::endl;
+    std::cout << "IVA (13%): $" << std::fixed << std::setprecision(2) << subtotal * iva << std::endl;
+    std::cout << "Total: $" << std::fixed << std::setprecision(2) << total << std::endl;
 
-			switch (tipo_habitacion)
-			{
-			case 1:
-				costoHabitacion = 17000;
-				if (llevaDesayuno) {
-					costoHabitacion += 3500;
-				}
-				break;
-			case 2:
-				costoHabitacion = 25000;
-				if (llevaDesayuno) {
-					costoHabitacion += 6000;
-				}
-				break;
-			case 3:
-				costoHabitacion = 42000;
-				if (llevaDesayuno) {
-					costoHabitacion += 9000;
-				}
-				break;
-			default:
-				break;
-			}
-
-			cout << "\n¿Cuantos dias? ";
-			cin >> dias;
-
-			if (dias > 3 && esSocio) {
-				descuento = costoHabitacion * 0.25;
-			}
-
-			if (dias > 3 && !esSocio) {
-				descuento = costoHabitacion * 0.10;
-			}
-			
-			system("cls");
-
-			// Imprimir la tabla
-			cout << setw(20) << left << "Concepto" << setw(30) << left << "Valor" << endl;
-			cout << setw(30) << left << "Tipo de Habitación" << setw(30) << left << tipo_habitacion << endl;
-			cout << setw(30) << left << "Días" << setw(30) << left << dias << endl;
-			cout << setw(30) << left << "Desayuno" << setw(30) << left << (llevaDesayuno ? "Sí" : "No") << endl;
-			cout << setw(30) << left << "Socio" << setw(30) << left << (esSocio ? "Sí" : "No") << endl;
-			cout << setw(30) << left << "Descuento Aplicado" << setw(30) << left << descuento << endl;
-			cout << setw(30) << left << "TOTAL" << setw(30) << left << (costoHabitacion - descuento) << endl;
-			cout << "\nGracias por utilizar nuestros servicios." << endl;
-			return 0;
-		default:
-			cout << "\nOpción no válida. Por favor, seleccione una opción válida." << endl;
-		}
-	}
-
-	return 0;
+    return 0;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
